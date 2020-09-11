@@ -1,33 +1,33 @@
 const ardata = [
   {
     scenario: "Current",
-    "Mobile Voice": "672349",
-    "Mobile VoiceColor": "#e8c1a0",
-    "Mobile Data": "991811",
-    "Mobile DataColor": "#f47560",
-    "Net Spend": "1626705",
-    "Net SpendColor": "#ffff",
-    "Revenue change": "0%"
+    MV: "672349",
+    MVColor: "#e8c1a0",
+    MD: "991811",
+    MDColor: "#f47560",
+    NS: "1626705",
+    NSColor: "#ffff",
+    "Revenue Change": "0%"
   },
   {
     scenario: "Proposed",
-    "Mobile Voice": "592364",
-    "Mobile VoiceColor": "#e8c1a0",
-    "Mobile Data": "829865",
-    "Mobile DataColor": "#f47560",
-    "Net Spend": "1280006",
-    "Net SpendColor": "#ffff",
-    "Revenue change": "-21%"
+    MV: "592364",
+    MVColor: "#e8c1a0",
+    MD: "829865",
+    MDColor: "#f47560",
+    NS: "1280006",
+    NSColor: "#ffff",
+    "Revenue Change": "-21%"
   },
   {
     scenario: "Requested",
-    "Mobile Voice": "420000",
-    "Mobile VoiceColor": "#e8c1a0",
-    "Mobile Data": "790000",
-    "Mobile DataColor": "#f47560",
-    "Net Spend": "1010000",
-    "Net SpendColor": "#ffff",
-    "Revenue change": "-38%"
+    MV: "420000",
+    MVColor: "#e8c1a0",
+    MD: "790000",
+    MDColor: "#f47560",
+    NS: "1010000",
+    NSColor: "#ffff",
+    "Revenue Change": "-38%"
   }
 ];
 

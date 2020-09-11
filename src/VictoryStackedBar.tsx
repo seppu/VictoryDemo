@@ -1,14 +1,15 @@
 import React from "react";
 // import PropTypes from "prop-types";
-import { VictoryAxis } from "victory";
+import { VictoryAxis, VictoryBar, VictoryChart } from "victory";
 import { VictoryStack } from "victory";
 import { VictoryLabel } from "victory";
+import { format } from "d3-format";
 // import { VictoryBar } from "victory";
 
 // import { VictoryContainer, VictoryTheme, VictoryLabel } from "victory";
 // import { assign, random, range, merge } from "lodash";
 
-import VictoryCustomTheme from "./styles/VictoryCustomTheme";
+// import VictoryCustomTheme from "./styles/VictoryCustomTheme";
 
 const getStyles: any = () => {
   const BLUE_COLOR = "#00a3de";
@@ -42,7 +43,7 @@ const getStyles: any = () => {
       axis: { stroke: "black", strokeWidth: 1 },
       ticks: {
         size: ({ tick }: any) => {
-          const tickSize = tick.getFullYear() % 5 === 0 ? 10 : 5;
+          const tickSize = [10];
           return tickSize;
         },
         stroke: "black",
@@ -113,48 +114,79 @@ const getStyles: any = () => {
 };
 
 const styles = getStyles();
+
 const VictoryStackedBar: React.FunctionComponent<any> = ({ data, keys }) => {
   return (
-    <svg style={styles.parent} viewBox="0 0 450 350" height={350} width={450}>
-      {/* Create stylistic elements */}
-      <rect
-        x="0"
-        y="0"
-        width="10"
-        height="30"
-        fill={VictoryCustomTheme.color.red}
-      />
-      <rect
-        x="420"
-        y="10"
-        width="20"
-        height="20"
-        fill={VictoryCustomTheme.color.black}
-      />
-      {/* Define labels */}
+    // <svg style={styles.parent} viewBox="0 0 450 350" height={450} width={450}>
+    //   {/* Create stylistic elements */}
+    // {/* //   <rect
+    //     x="0"
+    //     y="0"
+    //     width="10"
+    //     height="30"
+    //     fill={VictoryCustomTheme.color.red}
+    //   />
+    //   <rect
+    //     x="420"
+    //     y="10"
+    //     width="20"
+    //     height="20"
+    //     fill={VictoryCustomTheme.color.black}
+    //   /> */}
+    //   {/* Define labels */}
+    <VictoryChart height={300} width={400} domainPadding={{ x: 30, y: 20 }}>
       <VictoryLabel x={25} y={24} style={styles.title} text="Annual Revenue" />
-      <g transform="translate(0, 40)">
-        {/* Add shared independent axis */}
-        <VictoryAxis
-          scale="time"
-          standalone={false}
-          style={styles.axisYears}
-          tickValues={data.map(({ scenario: scenario }: any) => scenario)}
+      {/* <g transform="translate(0, 40)"> */}
+      {/* Add shared independent axis */}
+      <VictoryAxis
+        // scale="time"
+        standalone={false}
+        // style={styles.axisYears}
+        tickValues={data.map(({ scenario }: any) => scenario)}
+      />
+      {/*
+        Add the dependent axis for the first data set.
+        Note that all components plotted against this axis will have the same y domain
+      */}
+      <VictoryAxis
+        dependentAxis
+        offsetX={60}
+        orientation="left"
+        standalone={false}
+        style={styles.axisOne}
+        tickFormat={(t) => format("$.2s")(t)}
+        // domain={[0,10]}
+        // tickValues ={data.map(({ NS }: any) => NS)}
+      />
+      <VictoryStack colorScale={["#e8c1a0", "#f47560", "tomato"]}>
+        <VictoryBar
+          data={data.map(({ scenario, MD }: any) => [{ scenario, MD }][0])}
+          // data={[
+          //   { x: "Current", y: 991811 },
+          //   { x: "Proposed", y: 829865 },
+          //   { x: "Requested", y: 790000 }
+          // ]}
+          x="scenario"
+          y="MD"
+
+          // scale={{x: "scenario", y: "linear"}}
         />
-        {/*
-              Add the dependent axis for the first data set.
-              Note that all components plotted against this axis will have the same y domain
-              */}
-        <VictoryAxis
-          dependentAxis
-          offsetX={50}
-          orientation="left"
-          standalone={false}
-          style={styles.axisOne}
+        <VictoryBar
+          data={data.map(({ scenario, MV }: any) => [{ scenario, MV }][0])}
+          // data={[
+          //   { scenario: "Current", MD: 672349 },
+          //   { scenario: "Proposed", MD: 592364 },
+          //   { scenario: "Requested", MD: 420000 }
+          // ]}
+          x="scenario"
+          y="MV"
+          // scale={{x: "scenario", y: "linear"}}
+          labels={data.map(({ NS }: any) => format("$.2s")(NS))}
         />
-        <VictoryStack></VictoryStack>
-      </g>
-    </svg>
+      </VictoryStack>
+      {/* </g> */}
+    </VictoryChart>
+    // {/* </svg> */}
   );
 };
 
